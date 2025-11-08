@@ -1,101 +1,105 @@
-import { useState } from "react";
-import axios from "axios";
+import React, { useState } from "react";
 
-function Booking() {
-  const [formData, setFormData] = useState({
+const Booking = () => {
+  const [form, setForm] = useState({
     name: "",
-    phone: "",
+    contact: "",
     service: "",
     date: "",
-    time: "",
+    time: ""
   });
 
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
+    setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-
-    try {
-      // kirim data ke backend
-      await axios.post("http://localhost:5000/api/booking", formData);
-      alert("Booking berhasil dikirim!");
-      setFormData({
-        name: "",
-        phone: "",
-        service: "",
-        date: "",
-        time: "",
-      });
-    } catch (error) {
-      console.error(error);
-      alert("Terjadi kesalahan saat mengirim data!");
-    }
+    alert("Booking submitted! (nanti dikirim ke backend)");
   };
 
   return (
-    <div style={{ padding: "40px", maxWidth: "500px", margin: "auto" }}>
-      <h2>Booking Appointment</h2>
-      <form onSubmit={handleSubmit}>
-        <label>Nama:</label>
-        <input
-          type="text"
-          name="name"
-          value={formData.name}
-          onChange={handleChange}
-          required
-        />
+    <div className="min-h-screen bg-[#2B1B14] flex flex-col items-center px-4 py-12 text-white">
+      <h1 className="text-4xl font-bold mb-2">Book Your Appointment</h1>
+      <p className="text-gray-400 mb-8">
+        Fill in the details below to schedule your visit.
+      </p>
 
-        <label>No. Telepon:</label>
-        <input
-          type="text"
-          name="phone"
-          value={formData.phone}
-          onChange={handleChange}
-          required
-        />
+      <form
+        onSubmit={handleSubmit}
+        className="bg-[#1E120D] w-full max-w-md p-6 rounded-2xl shadow-lg space-y-4"
+      >
+        <div>
+          <label className="block text-sm mb-1">Name</label>
+          <input
+            type="text"
+            name="name"
+            placeholder="Enter your name"
+            value={form.name}
+            onChange={handleChange}
+            className="w-full p-3 bg-transparent border border-gray-600 rounded-lg focus:outline-none focus:border-orange-500"
+          />
+        </div>
 
-        <label>Layanan:</label>
-        <select
-          name="service"
-          value={formData.service}
-          onChange={handleChange}
-          required
+        <div>
+          <label className="block text-sm mb-1">Contact Number</label>
+          <input
+            type="text"
+            name="contact"
+            placeholder="Enter your contact number"
+            value={form.contact}
+            onChange={handleChange}
+            className="w-full p-3 bg-transparent border border-gray-600 rounded-lg focus:outline-none focus:border-orange-500"
+          />
+        </div>
+
+        <div>
+          <label className="block text-sm mb-1">Select Service</label>
+          <select
+            name="service"
+            value={form.service}
+            onChange={handleChange}
+            className="w-full p-3 bg-transparent border border-gray-600 rounded-lg focus:outline-none focus:border-orange-500"
+          >
+            <option value="">Choose a service</option>
+            <option value="Haircut">Haircut</option>
+            <option value="Beard Trim">Beard Trim</option>
+            <option value="Hair & Beard Package">Hair & Beard Package</option>
+          </select>
+        </div>
+
+        <div className="flex gap-4">
+          <div className="flex-1">
+            <label className="block text-sm mb-1">Preferred Date</label>
+            <input
+              type="date"
+              name="date"
+              value={form.date}
+              onChange={handleChange}
+              className="w-full p-3 bg-transparent border border-gray-600 rounded-lg focus:outline-none focus:border-orange-500"
+            />
+          </div>
+          <div className="flex-1">
+            <label className="block text-sm mb-1">Preferred Time</label>
+            <input
+              type="time"
+              name="time"
+              value={form.time}
+              onChange={handleChange}
+              className="w-full p-3 bg-transparent border border-gray-600 rounded-lg focus:outline-none focus:border-orange-500"
+            />
+          </div>
+        </div>
+
+        <button
+          type="submit"
+          className="w-full bg-orange-600 hover:bg-orange-700 text-white font-semibold py-3 rounded-lg transition duration-200"
         >
-          <option value="">Pilih Layanan</option>
-          <option value="Classic Haircut">Classic Haircut</option>
-          <option value="Beard Trim & Style">Beard Trim & Style</option>
-          <option value="Hair Color">Hair Color</option>
-        </select>
-
-        <label>Tanggal:</label>
-        <input
-          type="date"
-          name="date"
-          value={formData.date}
-          onChange={handleChange}
-          required
-        />
-
-        <label>Waktu:</label>
-        <input
-          type="time"
-          name="time"
-          value={formData.time}
-          onChange={handleChange}
-          required
-        />
-
-        <button type="submit" style={{ marginTop: "10px" }}>
-          Kirim Booking
+          Book Appointment
         </button>
       </form>
     </div>
   );
-}
+};
 
 export default Booking;

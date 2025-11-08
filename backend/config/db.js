@@ -5,7 +5,7 @@ const db = mysql.createConnection({
   host: 'localhost',
   user: 'root',
   password: '',        // isi jika ada password
-  database: 'bokong_barbershop'
+  database: 'boking_barbershop'
 });
 
 // Tes koneksi
